@@ -1,7 +1,7 @@
 {
   "name": "putil-taskqueue",
   "description": "Very simple async task queue for ES6",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Panates Ltd.",
   "contributors": [
     "Eray Hanoglu <e.hanoglu@panates.com>"
