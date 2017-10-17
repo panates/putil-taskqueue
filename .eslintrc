@@ -5,12 +5,8 @@
     "google"
   ],
   "env": {
-    "es6": true,
+    "es6": false,
     "node": true
-  },
-  "ecmaFeatures": {
-    "destructuring": true,
-    "modules": true
   },
   "rules": {
     "no-console": 1,
@@ -22,7 +18,7 @@
         "args": "none"
       }
     ],
-    "no-var": 1,
+    "no-var": 0,
     "prefer-const": 1,
     "no-trailing-spaces": 0,
     "spaced-comment": 0,
