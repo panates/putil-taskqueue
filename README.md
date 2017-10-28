@@ -5,7 +5,7 @@
 [![Dependencies][dependencies-image]][dependencies-url]
 [![DevDependencies][devdependencies-image]][devdependencies-url]
 
-Very simple async task queue for ES6.
+Very simple async task queue for Javascript.
 
 ## Installation
 
@@ -13,7 +13,7 @@ Very simple async task queue for ES6.
 
 ## Node Compatibility
 
-  - node `>= 6.x`;
+  - node `>= 4.x`;
   
 ### License
 [MIT](LICENSE)
