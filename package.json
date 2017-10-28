@@ -1,6 +1,6 @@
 {
   "name": "putil-taskqueue",
-  "description": "Very simple async task queue for ES6",
+  "description": "Very simple async task queue for Javascript",
   "version": "1.1.1",
   "author": "Panates Ltd.",
   "contributors": [
@@ -25,7 +25,7 @@
     "mocha": "^3.4.2"
   },
   "engines": {
-    "node": ">= 6.0"
+    "node": ">= 4.0"
   },
   "directories": {
     "lib": "./lib"
