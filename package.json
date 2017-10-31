@@ -1,7 +1,7 @@
 {
   "name": "putil-taskqueue",
   "description": "Very simple async task queue for Javascript",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "author": "Panates Ltd.",
   "contributors": [
     "Eray Hanoglu <e.hanoglu@panates.com>"
