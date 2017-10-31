@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "repository": "panates/putil-taskqueue",
-  "main": "lib/taskqueue.js",
+  "main": "lib/TaskQueue.js",
   "keywords": [
     "javascript",
     "async",
@@ -18,11 +18,11 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "eslint": "^3.19.0",
-    "eslint-config-google": "^0.8.0",
+    "babel-eslint": "^8.0.1",
+    "eslint": "^4.10.0",
+    "eslint-config-google": "^0.9.1",
     "istanbul": "^0.4.5",
-    "mocha": "^3.4.2"
+    "mocha": "^4.0.1"
   },
   "engines": {
     "node": ">= 4.0"
