@@ -72,13 +72,23 @@ describe('TaskQueue', function() {
     });
   });
 
-  it('should handle error', function(done) {
+  it('should handle throwed error', function(done) {
     var queue = new TaskQueue();
     queue.on('error', function() {
       done();
     });
     queue.push(function(next) {
       throw new Error('test');
+    });
+  });
+
+  it('should handle error', function(done) {
+    var queue = new TaskQueue();
+    queue.on('error', function() {
+      done();
+    });
+    queue.push(function(next) {
+      next(Error('test'));
     });
   });
 
