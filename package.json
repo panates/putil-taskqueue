@@ -16,7 +16,9 @@
     "queue",
     "taskqueue"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "doublylinked": "^1.0.3"
+  },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
     "eslint": "^4.10.0",
