@@ -5,105 +5,116 @@ const assert = require('assert'),
 describe('TaskQueue', function() {
 
   it('should construct', function() {
-    var queue = new TaskQueue();
+    const queue = new TaskQueue();
     assert.equal(queue.maxQueue, undefined);
   });
 
   it('should construct with options', function() {
-    var queue = new TaskQueue({
+    const queue = new TaskQueue({
       maxQueue: 100
     });
     assert.equal(queue.maxQueue, 100);
   });
 
-  it('should not exceed maxQueue', function(done) {
-    var queue = new TaskQueue({
+  it('should not exceed maxQueue', function() {
+    const queue = new TaskQueue({
       maxQueue: 1
     });
-    queue.enqueue(function() {});
+    queue.enqueue(() => {});
     try {
-      queue.enqueue(function() {});
+      queue.enqueue(() => {});
     } catch (e) {
-      done();
+      return;
     }
     assert(1);
   });
 
-  it('should push', function(done) {
-    var queue = new TaskQueue();
-    queue.push(function() {
+  it('should execute task', function(done) {
+    const queue = new TaskQueue();
+    queue.enqueue(() => {
       done();
     });
   });
 
-  it('should enqueue', function(done) {
-    var queue = new TaskQueue();
-    queue.enqueue(function() {
+  it('should enqueue return promise', function() {
+    const queue = new TaskQueue();
+    const p = queue.enqueue(() => {});
+    assert(p instanceof Promise);
+  });
+
+  it('should promise resolved after task executed successfully', function(done) {
+    const queue = new TaskQueue();
+    let ok;
+    queue.enqueue(() => {
+      ok = 1;
+    }).then(() => {
+      assert(ok);
       done();
     });
   });
 
-  it('should unshift', function(done) {
-    var queue = new TaskQueue();
-    var a = [];
-    queue.enqueue(function(next) {
-      a.push(1);
-      setTimeout(next, 10);
-    });
-    queue.unshift(function(next) {
-      a.push(2);
-      assert.deepEqual(a, [1, 3, 2]);
-      done();
-    });
-    queue.unshift(function(next) {
-      a.push(3);
-      next();
+  it('should task return promise', function() {
+    const queue = new TaskQueue();
+    return queue.enqueue(() => {
+      return Promise.resolve();
     });
   });
 
-  it('should next on error', function(done) {
-    var queue = new TaskQueue();
-    queue.push(function(next) {
+  it('should handle nested promise', function(done) {
+    const queue = new TaskQueue();
+    queue.enqueue(() => {
+      return Promise.reject();
+    }).then(() => done('Failed'))
+        .catch(() => done());
+  });
+
+  it('should reject promise when task throws error', function(done) {
+    const queue = new TaskQueue();
+    queue.enqueue(() => {
+      throw new Error('Any error');
+    }).then(() => done('Failed'))
+        .catch(() => done());
+  });
+
+  it('should execute next on error', function() {
+    const queue = new TaskQueue();
+    queue.enqueue(() => {
       throw new Error('test');
     });
-    queue.push(function(next) {
-      next();
-      done();
-    });
+    return queue.enqueue(() => {});
   });
 
-  it('should handle throwed error', function(done) {
-    var queue = new TaskQueue();
-    queue.on('error', function() {
+  it('should emit error event on throw', function(done) {
+    const queue = new TaskQueue();
+    queue.on('error', () => {
       done();
     });
-    queue.push(function(next) {
+    queue.enqueue(() => {
       throw new Error('test');
-    });
+    }).catch(() => {});
   });
 
-  it('should handle error', function(done) {
-    var queue = new TaskQueue();
-    queue.on('error', function() {
+  it('should emit error event when task returned rejected promise', function(done) {
+    const queue = new TaskQueue();
+    queue.on('error', () => {
       done();
     });
-    queue.push(function(next) {
-      next(Error('test'));
-    });
+    queue.enqueue(() => {
+      return Promise.reject('test');
+    }).catch(() => {});
   });
 
   it('should clear', function(done) {
-    var queue = new TaskQueue();
-    queue.enqueue(function(next) {
+    const queue = new TaskQueue();
+    let err;
+    queue.enqueue((next) => {
       setTimeout(next, 10);
     });
-    queue.clear();
-    queue.push(function(next) {
-      assert(1);
+    queue.enqueue(() => {
+      err = new Error('Failed');
     });
-    setTimeout(function() {
-      done();
-    }, 10);
+    queue.clear();
+    queue.enqueue(() => done(err));
   });
 
 });
