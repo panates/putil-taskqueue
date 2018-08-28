@@ -13,7 +13,7 @@ Very simple async task queue for Javascript.
 
 ## Node Compatibility
 
-  - node `>= 4.x`;
+  - node `>= 6.x`;
   
 ### License
 [MIT](LICENSE)

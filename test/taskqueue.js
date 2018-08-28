@@ -45,8 +45,9 @@ describe('TaskQueue', function() {
   it('should promise resolved after task executed successfully', function(done) {
     const queue = new TaskQueue();
     let ok;
-    queue.enqueue(() => {
+    queue.enqueue((taskDone) => {
       ok = 1;
+      taskDone();
     }).then(() => {
       assert(ok);
       done();
@@ -80,8 +81,8 @@ describe('TaskQueue', function() {
     const queue = new TaskQueue();
     queue.enqueue(() => {
       throw new Error('test');
-    });
-    return queue.enqueue(() => {});
+    }).catch(() => {});
+    return queue.enqueue(() => Promise.resolve());
   });
 
   it('should emit error event on throw', function(done) {
