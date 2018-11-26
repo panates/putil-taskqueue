@@ -1,19 +1,19 @@
 /* eslint-disable */
-const assert = require('assert'),
-    TaskQueue = require('../');
+const assert = require('assert');
+const TaskQueue = require('../');
 
 describe('TaskQueue', function() {
 
   it('should construct', function() {
     const queue = new TaskQueue();
-    assert.equal(queue.maxQueue, undefined);
+    assert.strictEqual(queue.maxQueue, undefined);
   });
 
   it('should construct with options', function() {
     const queue = new TaskQueue({
       maxQueue: 100
     });
-    assert.equal(queue.maxQueue, 100);
+    assert.strictEqual(queue.maxQueue, 100);
   });
 
   it('should not exceed maxQueue', function() {

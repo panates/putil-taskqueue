@@ -17,12 +17,12 @@
     "taskqueue"
   ],
   "dependencies": {
-    "doublylinked": "^1.0.7"
+    "doublylinked": "^2.0.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.2.6",
-    "eslint": "^5.4.0",
-    "eslint-config-google": "^0.9.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.9.0",
+    "eslint-config-google": "^0.11.0",
     "istanbul": "^0.4.5",
     "mocha": "^5.2.0"
   },
@@ -37,9 +37,12 @@
     "README.md",
     "lib/"
   ],
+  "nyc": {
+    "temp-dir": "./coverage/.nyc_output"
+  },
   "scripts": {
-    "test": "mocha --require test/support/env --reporter spec --bail --check-leaks test/",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --require test/support/env --reporter dot --check-leaks test/",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --require test/support/env --reporter spec --check-leaks test/"
+    "test": "mocha --require ./test/support/env --reporter spec --bail --check-leaks test/",
+    "cover": "nyc --reporter html --reporter text npm run test",
+    "travis-cover": "nyc --reporter lcovonly npm run test"
   }
 }
