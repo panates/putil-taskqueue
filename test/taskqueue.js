@@ -16,13 +16,13 @@ describe('TaskQueue', function() {
     assert.strictEqual(queue.maxQueue, 100);
   });
 
-  it('should not exceed maxQueue', function() {
+  it('should not exceed maxQueue', async function() {
     const queue = new TaskQueue({
       maxQueue: 1
     });
     queue.enqueue(() => {});
     try {
-      queue.enqueue(() => {});
+      await queue.enqueue(() => {});
     } catch (e) {
       return;
     }

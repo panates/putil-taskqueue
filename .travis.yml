@@ -1,18 +1,17 @@
 language: node_js
 node_js:
-  - "3"
-  - "4"
-  - "5"
-  - "6"
   - "8"
+  - "9"
+  - "10"
+  - "stable"
 sudo: false
 cache:
   directories:
+    - "$HOME/.npm"
     - node_modules
-before_install:
-  - "test ! -d node_modules || npm prune"
-  - "test ! -d node_modules || npm rebuild"
+install:
+  - "npm install"
 script:
-  - "npm run-script test-travis"
+  - "npm run-script travis-cover"
 after_script:
-  - "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
+- "npm install coveralls && cat ./coverage/lcov.info | coveralls"
