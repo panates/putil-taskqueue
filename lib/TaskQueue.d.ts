@@ -1,3 +1,5 @@
+import {EventEmitter} from 'events';
+
 declare module 'putil-taskqueue' {
 
 
@@ -8,7 +10,7 @@ declare module 'putil-taskqueue' {
     export type Task = (done: (e?: Error) => void) => void;
     export type AsyncTask = () => Promise<void>;
 
-    export default class TaskQueue {
+    export default class TaskQueue extends EventEmitter {
 
         constructor(options?: TaskQueueOptions);
 

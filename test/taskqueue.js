@@ -36,6 +36,44 @@ describe('TaskQueue', function() {
     });
   });
 
+  it('should emit "enqueue" event', function(done) {
+    const queue = new TaskQueue();
+    queue.on('enqueue', () => {
+      done();
+    });
+    queue.enqueue(() => {
+    });
+  });
+
+  it('should emit "task-complete" event after each task completed', function(done) {
+    const queue = new TaskQueue();
+    let i = 0;
+    queue.on('finish', () => {
+      assert.strictEqual(i, 2);
+      done();
+    });
+    queue.on('task-complete', () => {
+      i++;
+    });
+    queue.enqueue(() => {});
+    queue.enqueue(() => {});
+  });
+
+  it('should emit "finish" event after all task completed', function(done) {
+    const queue = new TaskQueue();
+    let i = 0;
+    queue.on('finish', () => {
+      assert.strictEqual(i, 2);
+      done();
+    });
+    queue.enqueue(() => {
+      i++;
+    });
+    queue.enqueue(() => {
+      i++;
+    });
+  });
+
   it('should enqueue return promise', function() {
     const queue = new TaskQueue();
     const p = queue.enqueue(() => {});
