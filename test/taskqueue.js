@@ -36,6 +36,14 @@ describe('TaskQueue', function() {
     });
   });
 
+  it('should task return a result', async function() {
+    const queue = new TaskQueue();
+    const result = await queue.enqueue(() => {
+      return 123;
+    });
+    assert.strictEqual(result, 123);
+  });
+
   it('should emit "enqueue" event', function(done) {
     const queue = new TaskQueue();
     queue.on('enqueue', () => {
