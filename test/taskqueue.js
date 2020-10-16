@@ -57,7 +57,11 @@ describe('TaskQueue', function() {
     const queue = new TaskQueue();
     let i = 0;
     queue.on('finish', () => {
-      assert.strictEqual(i, 2);
+      try {
+        assert.strictEqual(i, 2);
+      } catch (e) {
+        return done(e);
+      }
       done();
     });
     queue.on('task-complete', () => {
@@ -71,7 +75,11 @@ describe('TaskQueue', function() {
     const queue = new TaskQueue();
     let i = 0;
     queue.on('finish', () => {
-      assert.strictEqual(i, 2);
+      try {
+        assert.strictEqual(i, 2);
+      } catch (e) {
+        return done(e);
+      }
       done();
     });
     queue.enqueue(() => {
@@ -123,6 +131,25 @@ describe('TaskQueue', function() {
         .catch(() => done());
   });
 
+  it('should add a task to first location in the queue', function(done) {
+    const queue = new TaskQueue();
+    const q = [];
+    queue.on('finish', () => {
+      try {
+        assert.deepStrictEqual(q, [2, 1]);
+      } catch (e) {
+        return done(e);
+      }
+      done();
+    });
+    queue.enqueue(() => {
+      q.push(1);
+    });
+    queue.enqueue(() => {
+      q.push(2);
+    }, true);
+  });
+
   it('should execute next on error', function() {
     const queue = new TaskQueue();
     queue.enqueue(() => {
@@ -149,6 +176,24 @@ describe('TaskQueue', function() {
     queue.enqueue(() => {
       return Promise.reject('test');
     }).catch(() => {});
+  });
+
+  it('should pause', function(done) {
+    const queue = new TaskQueue();
+    queue.pause();
+    let i = 0;
+    setTimeout(() => {
+      i = 1;
+      queue.resume();
+    }, 250);
+    queue.enqueue(() => {
+      try {
+        assert.strictEqual(i, 1);
+      } catch (e) {
+        done(e);
+      }
+      done();
+    });
   });
 
   it('should clear', function(done) {

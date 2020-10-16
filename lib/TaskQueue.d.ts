@@ -18,7 +18,11 @@ declare module 'putil-taskqueue' {
 
         clear(): void;
 
-        enqueue(task: Task | AsyncTask): Promise<void>;
+        pause(): void;
+
+        resume(): void;
+
+        enqueue(task: Task | AsyncTask, toFirst?: boolean): Promise<void>;
 
     }
 
