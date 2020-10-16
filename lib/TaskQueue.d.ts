@@ -8,7 +8,7 @@ declare module 'putil-taskqueue' {
     }
 
     export type Task = (done: (e?: Error) => void) => void;
-    export type AsyncTask = () => Promise<void>;
+    export type AsyncTask<T = any> = () => Promise<T>;
 
     export default class TaskQueue extends EventEmitter {
 
@@ -22,7 +22,7 @@ declare module 'putil-taskqueue' {
 
         resume(): void;
 
-        enqueue(task: Task | AsyncTask, toFirst?: boolean): Promise<void>;
+        enqueue<T>(task: Task | AsyncTask<T>, toFirst?: boolean): Promise<T>;
 
     }
 
