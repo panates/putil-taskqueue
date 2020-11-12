@@ -21,7 +21,7 @@ Very simple async task queue for Javascript.
 [npm-image]: https://img.shields.io/npm/v/putil-taskqueue.svg
 [npm-url]: https://npmjs.org/package/putil-taskqueue
 [travis-image]: https://img.shields.io/travis/panates/putil-taskqueue/master.svg
-[travis-url]: https://travis-ci.org/panates/putil-taskqueue
+[travis-url]: https://travis-ci.com/panates/putil-taskqueue
 [coveralls-image]: https://img.shields.io/coveralls/panates/putil-taskqueue/master.svg
 [coveralls-url]: https://coveralls.io/r/panates/putil-taskqueue
 [downloads-image]: https://img.shields.io/npm/dm/putil-taskqueue.svg
