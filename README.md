@@ -1,3 +1,5 @@
+### This package has been deprecated. Please use [power-tasks](https://www.npmjs.com/package/power-tasks) instead.
+
 # putil-taskqueue
 
 [![NPM Version][npm-image]][npm-url]

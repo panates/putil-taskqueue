@@ -1,29 +1,26 @@
 import {EventEmitter} from 'events';
 
-declare module 'putil-taskqueue' {
+export declare interface TaskQueueOptions {
+  maxQueue?: number;
+}
 
+export declare type Task = (done: (e?: Error) => void) => void;
+export declare type AsyncTask<T = any> = () => Promise<T>;
 
-    export interface TaskQueueOptions {
-        maxQueue?: number;
-    }
+declare class TaskQueue extends EventEmitter {
 
-    export type Task = (done: (e?: Error) => void) => void;
-    export type AsyncTask<T = any> = () => Promise<T>;
+  constructor(options?: TaskQueueOptions);
 
-    export default class TaskQueue extends EventEmitter {
+  get size(): number;
 
-        constructor(options?: TaskQueueOptions);
+  clear(): void;
 
-        get size(): number;
+  pause(): void;
 
-        clear(): void;
+  resume(): void;
 
-        pause(): void;
-
-        resume(): void;
-
-        enqueue<T>(task: Task | AsyncTask<T>, toFirst?: boolean): Promise<T>;
-
-    }
+  enqueue<T>(task: Task | AsyncTask<T>, toFirst?: boolean): Promise<T>;
 
 }
+
+export default TaskQueue;
